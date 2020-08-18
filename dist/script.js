@@ -3098,6 +3098,10 @@ function () {
     value: function render() {
       var _this = this;
 
+      try {
+        this.hanson = document.querySelector('.hanson');
+      } catch (e) {}
+
       this.$btns.forEach(function (btn) {
         btn.onclick = function (e) {
           e.preventDefault();
@@ -3120,6 +3124,8 @@ function () {
       var n = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
       if (n > this.$slides.length) this.slideIndex = 1;
       if (n < 1) this.slideIndex = this.$slides.length;
+
+      _showSlideAfterDelay.call(this);
 
       _hideAllSlides(this.$slides);
 
@@ -3159,6 +3165,24 @@ function _showSlide(slides, n) {
   var display = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 'block';
   slides[n].style.display = display;
   slides[n].classList.add('slideInDown');
+}
+
+function _showSlideAfterDelay() {
+  var _this2 = this;
+
+  if (this.$page.classList.contains('page')) {
+    this.hanson.style.opacity = 0;
+
+    if (this.slideIndex === 3) {
+      setTimeout(function () {
+        _this2.hanson.style.opacity = 1;
+
+        _this2.hanson.classList.add('animated', 'slideInUp');
+      }, 3000);
+    } else {
+      this.hanson.classList.remove('slideInUp');
+    }
+  }
 }
 
 /***/ })
