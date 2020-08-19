@@ -4,7 +4,7 @@ export default class VideoPlay{
 			this.$page = document.querySelector(page);
 			this.$btns = this.$page.querySelectorAll(buttons);
 			this.$overlay = this.$page.parentElement.querySelector('.overlay');
-			this.$close = this.$overlay.querySelector('.close');
+            this.$close = this.$overlay.querySelector('.close');
     	} catch(err) {
 
        }
@@ -23,6 +23,17 @@ export default class VideoPlay{
 		} catch(err) {}
     }
 
+    useClose() {
+
+    }
+
+    btnClickHandler(e) {
+        e.preventDefault();
+        this.currentBtn = e.target;
+        const path = e.target.closest('[data-url]').getAttribute('data-url');
+        _createPlayer.call(this, path);
+    }
+
     destroy() {
         this.$btns.forEach(btn => {
             btn.onclick = null;
@@ -34,20 +45,19 @@ export default class VideoPlay{
     }
 }
 
-function _btnClickHandler(e) {
-    e.preventDefault();
-    const path = e.target.closest('[data-url]').getAttribute('data-url');
-    _createPlayer.call(this, path);
-}
 
 function _closeClickHandler() {
     _overlayStyle.call(this, 'none', ['animated', 'fadeOut'], ['fadeIn']);
     this.player.stopVideo();
+    this.useClose()
 }
 
 function _bindTriggersPlay() {
     this.$btns.forEach(btn => {
-        btn.onclick = _btnClickHandler.bind(this);
+        if(btn.classList.contains('closed')) btn.onclick = null;
+        else btn.onclick = (e) => {
+          this.btnClickHandler(e);
+        }
     });
 }
 
@@ -57,9 +67,11 @@ function _bindCloseBtn() {
 
 function _createPlayer(url) { 
     _overlayStyle.call(this, 'flex', ['animated', 'fadeIn'], ['fadeOut']);
-   if(this.player) return;
-
-   this.player = new YT.Player('frame', {
+	if(this.player) {
+       this.player.loadVideoById({videoId:`${url}`});
+       return;
+	}
+	this.player = new YT.Player('frame', {
         height: '100%',
         width: '100%',
         videoId: `${url}`

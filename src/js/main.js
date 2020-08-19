@@ -64,7 +64,24 @@ window.addEventListener('DOMContentLoaded', () => {
         btns:'a.next',
         prev: '.prevmodule',
         next: ' .nextmodule',
-        logo:'.sidecontrol .logo'
+        logo:'.sidecontrol a.logo'
     });
     mainModuleSlider.render();
+
+    const moduleVideos = new VideoPlay('.moduleapp', '.module__video-item .play__circle');
+    moduleVideos.init();
+    moduleVideos.useClose = function() {
+        if(this.player.getCurrentTime() >= this.player.getDuration()) {
+            this.canOpen = true;
+            const $module = this.currentBtn.closest('.module');
+            const $close = $module.querySelectorAll('.play__circle')[1];
+            console.log($close, $playSvg);
+            $close.onclick = (e) => {
+                console.log(this)
+                this.btnClickHandler(e);
+                $close.innerHTML = $playSvg;
+                $close.classList.remove('closed');
+            }
+        }
+    }
 });

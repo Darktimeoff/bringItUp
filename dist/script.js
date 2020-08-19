@@ -4960,9 +4960,31 @@ window.addEventListener('DOMContentLoaded', function () {
     btns: 'a.next',
     prev: '.prevmodule',
     next: ' .nextmodule',
-    logo: '.sidecontrol .logo'
+    logo: '.sidecontrol a.logo'
   });
   mainModuleSlider.render();
+  var moduleVideos = new _modules_playVideo_component__WEBPACK_IMPORTED_MODULE_1__["default"]('.moduleapp', '.module__video-item .play__circle');
+  moduleVideos.init();
+
+  moduleVideos.useClose = function () {
+    var _this = this;
+
+    if (this.player.getCurrentTime() >= this.player.getDuration()) {
+      this.canOpen = true;
+      var $module = this.currentBtn.closest('.module');
+      var $close = $module.querySelectorAll('.play__circle')[1];
+      console.log($close, $playSvg);
+
+      $close.onclick = function (e) {
+        console.log(_this);
+
+        _this.btnClickHandler(e);
+
+        $close.innerHTML = $playSvg;
+        $close.classList.remove('closed');
+      };
+    }
+  };
 });
 
 /***/ }),
@@ -5164,7 +5186,6 @@ function () {
       failure: 'Что-то пошло не так...'
     };
     this.path = 'https://jsonplaceholder.typicode.com/posts';
-    console.log('hello');
   }
 
   _createClass(Form, [{
@@ -5197,7 +5218,6 @@ function _formSubmitHandler(e) {
   var _this2 = this;
 
   e.preventDefault();
-  console.log(e.target);
   var statusMessage = document.createElement('div');
   statusMessage.style.cssText = "\n        display: flex;\n        justify-content: center;\n        margin-top: 15px;\n        font-size: 18px;\n        color: grey;\n    ";
   e.target.parentElement.append(statusMessage);
@@ -5309,6 +5329,18 @@ function () {
       } catch (err) {}
     }
   }, {
+    key: "useClose",
+    value: function useClose() {}
+  }, {
+    key: "btnClickHandler",
+    value: function btnClickHandler(e) {
+      e.preventDefault();
+      this.currentBtn = e.target;
+      var path = e.target.closest('[data-url]').getAttribute('data-url');
+
+      _createPlayer.call(this, path);
+    }
+  }, {
     key: "destroy",
     value: function destroy() {
       this.$btns.forEach(function (btn) {
@@ -5324,24 +5356,20 @@ function () {
 
 
 
-function _btnClickHandler(e) {
-  e.preventDefault();
-  var path = e.target.closest('[data-url]').getAttribute('data-url');
-
-  _createPlayer.call(this, path);
-}
-
 function _closeClickHandler() {
   _overlayStyle.call(this, 'none', ['animated', 'fadeOut'], ['fadeIn']);
 
   this.player.stopVideo();
+  this.useClose();
 }
 
 function _bindTriggersPlay() {
   var _this = this;
 
   this.$btns.forEach(function (btn) {
-    btn.onclick = _btnClickHandler.bind(_this);
+    if (btn.classList.contains('closed')) btn.onclick = null;else btn.onclick = function (e) {
+      _this.btnClickHandler(e);
+    };
   });
 }
 
@@ -5352,7 +5380,13 @@ function _bindCloseBtn() {
 function _createPlayer(url) {
   _overlayStyle.call(this, 'flex', ['animated', 'fadeIn'], ['fadeOut']);
 
-  if (this.player) return;
+  if (this.player) {
+    this.player.loadVideoById({
+      videoId: "".concat(url)
+    });
+    return;
+  }
+
   this.player = new YT.Player('frame', {
     height: '100%',
     width: '100%',
@@ -5428,9 +5462,9 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
 
-function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
-
 function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
@@ -5460,7 +5494,6 @@ function (_Slider) {
       _this.$logo = _this.$container.querySelectorAll(logo);
       _this.$next = _this.$container.querySelectorAll(next);
       _this.$prev = _this.$container.querySelectorAll(prev);
-      console.log(_assertThisInitialized(_this));
     } catch (e) {}
 
     return _this;

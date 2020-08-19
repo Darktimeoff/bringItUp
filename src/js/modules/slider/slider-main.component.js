@@ -7,7 +7,6 @@ export default class MainSlider extends Slider {
 			this.$logo = this.$container.querySelectorAll(logo);
 			this.$next = this.$container.querySelectorAll(next);
 			this.$prev = this.$container.querySelectorAll(prev);
-			console.log(this)
 		} catch (e) {}
     }
 

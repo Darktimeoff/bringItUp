@@ -9,7 +9,6 @@ export default class Form {
             failure: 'Что-то пошло не так...'
         };
         this.path = 'https://jsonplaceholder.typicode.com/posts';
-        console.log('hello');
     }
 
     init() {
@@ -28,7 +27,6 @@ export default class Form {
 function _formSubmitHandler(e) {
     e.preventDefault();
 
-    console.log(e.target)
     let statusMessage = document.createElement('div');
     statusMessage.style.cssText = `
         display: flex;
