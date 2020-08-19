@@ -1,10 +1,13 @@
 import Slider from './slider.component';
 
 export default class MainSlider extends Slider {
-    constructor({logo=null, ...options}) {
+    constructor({logo=null, next, prev, ...options}) {
         super(options);
 		try {
 			this.$logo = this.$container.querySelectorAll(logo);
+			this.$next = this.$container.querySelectorAll(next);
+			this.$prev = this.$container.querySelectorAll(prev);
+			console.log(this)
 		} catch (e) {}
     }
 
@@ -14,23 +17,40 @@ export default class MainSlider extends Slider {
 				this.hanson = document.querySelector('.hanson');
 			} catch (e) {}
 	
-	
-			this.$btns.forEach( btn => {
-				btn.onclick = (e) => {
-					e.preventDefault();
-					this.plusSlides(1);
-				};
-			});
-	
-			this.$logo.forEach(logo => {
-				logo.onclick = (e) => {
-					e.preventDefault();
-					this.showSlides(this.slideIndex = 1);
-				};
-			});
-	
-			this.showSlides(1)
+			this.bindTriggers();
 		} catch (e){}
+	}
+
+	bindTriggers() {
+		this.$btns.forEach( btn => {
+			btn.onclick = (e) => {
+				e.preventDefault();
+				this.plusSlides(1);
+			};
+		});
+
+		this.$logo.forEach(logo => {
+			logo.onclick = (e) => {
+				e.preventDefault();
+				this.showSlides(this.slideIndex = 1);
+			};
+		});
+
+		this.showSlides(1)
+
+		this.$prev.forEach(prev => {
+			prev.onclick = (e) => {
+				e.preventDefault();
+				this.plusSlides(-1);
+			}
+		});
+
+		this.$next.forEach(next => {
+			next.onclick = (e) => {
+				e.preventDefault();
+				this.plusSlides(1);
+			}
+		});
 	}
 
 	showSlides(n = 1) { 
@@ -52,11 +72,19 @@ export default class MainSlider extends Slider {
 
 	destroy() {
 		this.$btns.forEach( btn => {
-			btn.onclick = null
+			btn.onclick = null;
 		});
 
 		this.$logo.forEach(logo => {
 			logo.onclick = null;
+		});
+
+		this.$prev.forEach(prev => {
+			prev.onclick = null;
+		});
+
+		this.$next.forEach(next => {
+			next.onclick = null
 		});
 	}
 }

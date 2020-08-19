@@ -4940,13 +4940,6 @@ window.addEventListener('DOMContentLoaded', function () {
   feedSlider.init();
   var pageVideo = new _modules_playVideo_component__WEBPACK_IMPORTED_MODULE_1__["default"]('.page', '.showup .play');
   pageVideo.init();
-  /*const difference = Difference.moreComponent({
-      containers: ['.officernew', '.officerold'],
-      cardContent: '.officer__card-item',
-      buttonClick:'.plus__content',
-      animateClass: 'fadeIn'
-  });*/
-
   var differenceNew = new _modules_difference_component__WEBPACK_IMPORTED_MODULE_3__["default"]({
     container: '.officernew',
     cardContent: '.officer__card-item',
@@ -4962,6 +4955,14 @@ window.addEventListener('DOMContentLoaded', function () {
   });
   differenceOld.init();
   new _modules_form_component__WEBPACK_IMPORTED_MODULE_4__["default"]('form').init();
+  var mainModuleSlider = new _modules_slider_slider_main_component__WEBPACK_IMPORTED_MODULE_0__["default"]({
+    container: '.moduleapp',
+    btns: 'a.next',
+    prev: '.prevmodule',
+    next: ' .nextmodule',
+    logo: '.sidecontrol .logo'
+  });
+  mainModuleSlider.render();
 });
 
 /***/ }),
@@ -5427,9 +5428,9 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
 
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
@@ -5447,7 +5448,9 @@ function (_Slider) {
 
     var _ref$logo = _ref.logo,
         logo = _ref$logo === void 0 ? null : _ref$logo,
-        options = _objectWithoutProperties(_ref, ["logo"]);
+        next = _ref.next,
+        prev = _ref.prev,
+        options = _objectWithoutProperties(_ref, ["logo", "next", "prev"]);
 
     _classCallCheck(this, MainSlider);
 
@@ -5455,6 +5458,9 @@ function (_Slider) {
 
     try {
       _this.$logo = _this.$container.querySelectorAll(logo);
+      _this.$next = _this.$container.querySelectorAll(next);
+      _this.$prev = _this.$container.querySelectorAll(prev);
+      console.log(_assertThisInitialized(_this));
     } catch (e) {}
 
     return _this;
@@ -5463,29 +5469,48 @@ function (_Slider) {
   _createClass(MainSlider, [{
     key: "render",
     value: function render() {
-      var _this2 = this;
-
       try {
         try {
           this.hanson = document.querySelector('.hanson');
         } catch (e) {}
 
-        this.$btns.forEach(function (btn) {
-          btn.onclick = function (e) {
-            e.preventDefault();
-
-            _this2.plusSlides(1);
-          };
-        });
-        this.$logo.forEach(function (logo) {
-          logo.onclick = function (e) {
-            e.preventDefault();
-
-            _this2.showSlides(_this2.slideIndex = 1);
-          };
-        });
-        this.showSlides(1);
+        this.bindTriggers();
       } catch (e) {}
+    }
+  }, {
+    key: "bindTriggers",
+    value: function bindTriggers() {
+      var _this2 = this;
+
+      this.$btns.forEach(function (btn) {
+        btn.onclick = function (e) {
+          e.preventDefault();
+
+          _this2.plusSlides(1);
+        };
+      });
+      this.$logo.forEach(function (logo) {
+        logo.onclick = function (e) {
+          e.preventDefault();
+
+          _this2.showSlides(_this2.slideIndex = 1);
+        };
+      });
+      this.showSlides(1);
+      this.$prev.forEach(function (prev) {
+        prev.onclick = function (e) {
+          e.preventDefault();
+
+          _this2.plusSlides(-1);
+        };
+      });
+      this.$next.forEach(function (next) {
+        next.onclick = function (e) {
+          e.preventDefault();
+
+          _this2.plusSlides(1);
+        };
+      });
     }
   }, {
     key: "showSlides",
@@ -5513,6 +5538,12 @@ function (_Slider) {
       });
       this.$logo.forEach(function (logo) {
         logo.onclick = null;
+      });
+      this.$prev.forEach(function (prev) {
+        prev.onclick = null;
+      });
+      this.$next.forEach(function (next) {
+        next.onclick = null;
       });
     }
   }]);

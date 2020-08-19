@@ -40,12 +40,6 @@ window.addEventListener('DOMContentLoaded', () => {
     const pageVideo = new VideoPlay('.page', '.showup .play');
     pageVideo.init();
 
-    /*const difference = Difference.moreComponent({
-        containers: ['.officernew', '.officerold'],
-        cardContent: '.officer__card-item',
-        buttonClick:'.plus__content',
-        animateClass: 'fadeIn'
-    });*/
 
     const differenceNew = new Difference({
         container: '.officernew',
@@ -65,4 +59,12 @@ window.addEventListener('DOMContentLoaded', () => {
 
     new Form('form').init()
     
+    const mainModuleSlider = new MainSlider({
+        container:'.moduleapp',
+        btns:'a.next',
+        prev: '.prevmodule',
+        next: ' .nextmodule',
+        logo:'.sidecontrol .logo'
+    });
+    mainModuleSlider.render();
 });
