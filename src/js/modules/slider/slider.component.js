@@ -1,5 +1,5 @@
 export default class Slider {
-    constructor({ container = null, btns = null, next = null, prev = null, activeClass = '', animate, autoplay} = {}) {
+    constructor({ container = null, btns = null, next = null, prev = null, activeClass = '', animate='', autoplay=false} = {}) {
 		try {
 			this.$container = document.querySelector(container);
 			this.$slides = [...this.$container.children];

@@ -1,20 +1,26 @@
 export default class VideoPlay{
-    constructor(page, buttons) { 
-        this.$page = document.querySelector(page);
-        this.$btns = this.$page.querySelectorAll(buttons);
-        this.$overlay = this.$page.parentElement.querySelector('.overlay');
-        this.$close = this.$overlay.querySelector('.close');
+    constructor(page=null, buttons=null) { 
+    	try {
+			this.$page = document.querySelector(page);
+			this.$btns = this.$page.querySelectorAll(buttons);
+			this.$overlay = this.$page.parentElement.querySelector('.overlay');
+			this.$close = this.$overlay.querySelector('.close');
+    	} catch(err) {
+
+       }
     }
 
     init() {
-        const tag = document.createElement('script');
+        try{
+			const tag = document.createElement('script');
 
-        tag.src = "https://www.youtube.com/iframe_api";
-        const firstScriptTag = document.getElementsByTagName('script')[0];
-        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+			tag.src = "https://www.youtube.com/iframe_api";
+			const firstScriptTag = document.getElementsByTagName('script')[0];
+			firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
-        _bindTriggersPlay.call(this);
-        _bindCloseBtn.call(this);
+			_bindTriggersPlay.call(this);
+			_bindCloseBtn.call(this);
+		} catch(err) {}
     }
 
     destroy() {

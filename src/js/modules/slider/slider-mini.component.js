@@ -3,20 +3,26 @@ import Slider from './slider.component';
 export default class MiniSlider extends Slider {
     constructor({slides = null, ...options}) {
         super(options);
-        this.$slides = [...this.$container.querySelectorAll(slides)];
+        try{
+              this.$slides = [...this.$container.querySelectorAll(slides)];
+        } catch(err) {
+
+        }
     }
 
     init() {
-        this.$container.style.cssText = `
-            display: flex;
-            flex-wrap: wrap;
-            overflow: hidden;
-            align-items: flex-start;
-        `
-        _bindTriggers.call(this);
+        try{
+            this.$container.style.cssText = `
+                display: flex;
+                flex-wrap: wrap;
+                overflow: hidden;
+                align-items: flex-start;
+            `
+            _bindTriggers.call(this);
 
-        _hideActiveSlide.call(this);
-        _addActiveSlide.call(this, this.$slides[0]);
+            _hideActiveSlide.call(this);
+            _addActiveSlide.call(this, this.$slides[0]);
+       } catch(err) {}
     }
 }
 

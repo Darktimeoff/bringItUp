@@ -1,32 +1,36 @@
 import Slider from './slider.component';
 
 export default class MainSlider extends Slider {
-    constructor({logo, ...options}) {
+    constructor({logo=null, ...options}) {
         super(options);
-		this.$logo = this.$container.querySelectorAll(logo);
+		try {
+			this.$logo = this.$container.querySelectorAll(logo);
+		} catch (e) {}
     }
 
     render() {
 		try {
-			this.hanson = document.querySelector('.hanson');
-		} catch (e) {}
-
-
-		this.$btns.forEach( btn => {
-			btn.onclick = (e) => {
-				e.preventDefault();
-				this.plusSlides(1);
-			};
-		});
-
-		this.$logo.forEach(logo => {
-			logo.onclick = (e) => {
-				e.preventDefault();
-				this.showSlides(this.slideIndex = 1);
-			};
-		});
-
-		this.showSlides(1)
+			try {
+				this.hanson = document.querySelector('.hanson');
+			} catch (e) {}
+	
+	
+			this.$btns.forEach( btn => {
+				btn.onclick = (e) => {
+					e.preventDefault();
+					this.plusSlides(1);
+				};
+			});
+	
+			this.$logo.forEach(logo => {
+				logo.onclick = (e) => {
+					e.preventDefault();
+					this.showSlides(this.slideIndex = 1);
+				};
+			});
+	
+			this.showSlides(1)
+		} catch (e){}
 	}
 
 	showSlides(n = 1) { 

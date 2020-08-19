@@ -5011,7 +5011,11 @@ function () {
     _classCallCheck(this, Difference);
 
     this.$container = document.querySelector(container);
-    this.$cards = this.$container.querySelectorAll(cardContent);
+
+    try {
+      this.$cards = this.$container.querySelectorAll(cardContent);
+    } catch (e) {}
+
     this.buttonClick = buttonClick;
     this.animateClass = animateClass;
     this.click = 0;
@@ -5020,9 +5024,11 @@ function () {
   _createClass(Difference, [{
     key: "init",
     value: function init() {
-      this.$container.onclick = _containerClickHandler.bind(this);
-      this.hideAllCards();
-      this.useInit();
+      try {
+        this.$container.onclick = _containerClickHandler.bind(this);
+        this.hideAllCards();
+        this.useInit();
+      } catch (e) {}
     }
   }, {
     key: "hideAllCards",
@@ -5273,26 +5279,33 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 var VideoPlay =
 /*#__PURE__*/
 function () {
-  function VideoPlay(page, buttons) {
+  function VideoPlay() {
+    var page = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
+    var buttons = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
+
     _classCallCheck(this, VideoPlay);
 
-    this.$page = document.querySelector(page);
-    this.$btns = this.$page.querySelectorAll(buttons);
-    this.$overlay = this.$page.parentElement.querySelector('.overlay');
-    this.$close = this.$overlay.querySelector('.close');
+    try {
+      this.$page = document.querySelector(page);
+      this.$btns = this.$page.querySelectorAll(buttons);
+      this.$overlay = this.$page.parentElement.querySelector('.overlay');
+      this.$close = this.$overlay.querySelector('.close');
+    } catch (err) {}
   }
 
   _createClass(VideoPlay, [{
     key: "init",
     value: function init() {
-      var tag = document.createElement('script');
-      tag.src = "https://www.youtube.com/iframe_api";
-      var firstScriptTag = document.getElementsByTagName('script')[0];
-      firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+      try {
+        var tag = document.createElement('script');
+        tag.src = "https://www.youtube.com/iframe_api";
+        var firstScriptTag = document.getElementsByTagName('script')[0];
+        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
-      _bindTriggersPlay.call(this);
+        _bindTriggersPlay.call(this);
 
-      _bindCloseBtn.call(this);
+        _bindCloseBtn.call(this);
+      } catch (err) {}
     }
   }, {
     key: "destroy",
@@ -5432,13 +5445,18 @@ function (_Slider) {
   function MainSlider(_ref) {
     var _this;
 
-    var logo = _ref.logo,
+    var _ref$logo = _ref.logo,
+        logo = _ref$logo === void 0 ? null : _ref$logo,
         options = _objectWithoutProperties(_ref, ["logo"]);
 
     _classCallCheck(this, MainSlider);
 
     _this = _possibleConstructorReturn(this, _getPrototypeOf(MainSlider).call(this, options));
-    _this.$logo = _this.$container.querySelectorAll(logo);
+
+    try {
+      _this.$logo = _this.$container.querySelectorAll(logo);
+    } catch (e) {}
+
     return _this;
   }
 
@@ -5448,24 +5466,26 @@ function (_Slider) {
       var _this2 = this;
 
       try {
-        this.hanson = document.querySelector('.hanson');
+        try {
+          this.hanson = document.querySelector('.hanson');
+        } catch (e) {}
+
+        this.$btns.forEach(function (btn) {
+          btn.onclick = function (e) {
+            e.preventDefault();
+
+            _this2.plusSlides(1);
+          };
+        });
+        this.$logo.forEach(function (logo) {
+          logo.onclick = function (e) {
+            e.preventDefault();
+
+            _this2.showSlides(_this2.slideIndex = 1);
+          };
+        });
+        this.showSlides(1);
       } catch (e) {}
-
-      this.$btns.forEach(function (btn) {
-        btn.onclick = function (e) {
-          e.preventDefault();
-
-          _this2.plusSlides(1);
-        };
-      });
-      this.$logo.forEach(function (logo) {
-        logo.onclick = function (e) {
-          e.preventDefault();
-
-          _this2.showSlides(_this2.slideIndex = 1);
-        };
-      });
-      this.showSlides(1);
     }
   }, {
     key: "showSlides",
@@ -5631,20 +5651,26 @@ function (_Slider) {
     _classCallCheck(this, MiniSlider);
 
     _this = _possibleConstructorReturn(this, _getPrototypeOf(MiniSlider).call(this, options));
-    _this.$slides = _toConsumableArray(_this.$container.querySelectorAll(slides));
+
+    try {
+      _this.$slides = _toConsumableArray(_this.$container.querySelectorAll(slides));
+    } catch (err) {}
+
     return _this;
   }
 
   _createClass(MiniSlider, [{
     key: "init",
     value: function init() {
-      this.$container.style.cssText = "\n            display: flex;\n            flex-wrap: wrap;\n            overflow: hidden;\n            align-items: flex-start;\n        ";
+      try {
+        this.$container.style.cssText = "\n                display: flex;\n                flex-wrap: wrap;\n                overflow: hidden;\n                align-items: flex-start;\n            ";
 
-      _bindTriggers.call(this);
+        _bindTriggers.call(this);
 
-      _hideActiveSlide.call(this);
+        _hideActiveSlide.call(this);
 
-      _addActiveSlide.call(this, this.$slides[0]);
+        _addActiveSlide.call(this, this.$slides[0]);
+      } catch (err) {}
     }
   }]);
 
@@ -5776,8 +5802,10 @@ var Slider = function Slider() {
       prev = _ref$prev === void 0 ? null : _ref$prev,
       _ref$activeClass = _ref.activeClass,
       activeClass = _ref$activeClass === void 0 ? '' : _ref$activeClass,
-      animate = _ref.animate,
-      autoplay = _ref.autoplay;
+      _ref$animate = _ref.animate,
+      animate = _ref$animate === void 0 ? '' : _ref$animate,
+      _ref$autoplay = _ref.autoplay,
+      autoplay = _ref$autoplay === void 0 ? false : _ref$autoplay;
 
   _classCallCheck(this, Slider);
 

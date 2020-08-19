@@ -1,17 +1,19 @@
 export default class Difference {
     constructor({container, cardContent, buttonClick, animateClass}) {
         this.$container = document.querySelector(container);
-        this.$cards = this.$container.querySelectorAll(cardContent);
+        try{this.$cards = this.$container.querySelectorAll(cardContent);}catch(e){}
         this.buttonClick  = buttonClick;
         this.animateClass = animateClass;
         this.click = 0;
     }
 
     init() { 
+       try{
         this.$container.onclick = _containerClickHandler.bind(this);
 
         this.hideAllCards();
         this.useInit();
+       } catch(e) {}
     }
 
     static moreComponent({containers, ...options}) {
