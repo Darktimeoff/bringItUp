@@ -2854,6 +2854,38 @@ exports.f = wellKnownSymbol;
 
 /***/ }),
 
+/***/ "./node_modules/core-js/modules/es.array.filter.js":
+/*!*********************************************************!*\
+  !*** ./node_modules/core-js/modules/es.array.filter.js ***!
+  \*********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var $ = __webpack_require__(/*! ../internals/export */ "./node_modules/core-js/internals/export.js");
+var $filter = __webpack_require__(/*! ../internals/array-iteration */ "./node_modules/core-js/internals/array-iteration.js").filter;
+var fails = __webpack_require__(/*! ../internals/fails */ "./node_modules/core-js/internals/fails.js");
+var arrayMethodHasSpeciesSupport = __webpack_require__(/*! ../internals/array-method-has-species-support */ "./node_modules/core-js/internals/array-method-has-species-support.js");
+
+var HAS_SPECIES_SUPPORT = arrayMethodHasSpeciesSupport('filter');
+// Edge 14- issue
+var USES_TO_LENGTH = HAS_SPECIES_SUPPORT && !fails(function () {
+  [].filter.call({ length: -1, 0: 1 }, function (it) { throw it; });
+});
+
+// `Array.prototype.filter` method
+// https://tc39.github.io/ecma262/#sec-array.prototype.filter
+// with adding support of @@species
+$({ target: 'Array', proto: true, forced: !HAS_SPECIES_SUPPORT || !USES_TO_LENGTH }, {
+  filter: function filter(callbackfn /* , thisArg */) {
+    return $filter(this, callbackfn, arguments.length > 1 ? arguments[1] : undefined);
+  }
+});
+
+
+/***/ }),
+
 /***/ "./node_modules/core-js/modules/es.array.find.js":
 /*!*******************************************************!*\
   !*** ./node_modules/core-js/modules/es.array.find.js ***!
@@ -4965,26 +4997,6 @@ window.addEventListener('DOMContentLoaded', function () {
   mainModuleSlider.render();
   var moduleVideos = new _modules_playVideo_component__WEBPACK_IMPORTED_MODULE_1__["default"]('.moduleapp', '.module__video-item .play__circle');
   moduleVideos.init();
-
-  moduleVideos.useClose = function () {
-    var _this = this;
-
-    if (this.player.getCurrentTime() >= this.player.getDuration()) {
-      this.canOpen = true;
-      var $module = this.currentBtn.closest('.module');
-      var $close = $module.querySelectorAll('.play__circle')[1];
-      console.log($close, $playSvg);
-
-      $close.onclick = function (e) {
-        console.log(_this);
-
-        _this.btnClickHandler(e);
-
-        $close.innerHTML = $playSvg;
-        $close.classList.remove('closed');
-      };
-    }
-  };
 });
 
 /***/ }),
@@ -5258,20 +5270,23 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var core_js_modules_es_symbol_description__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_symbol_description__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var core_js_modules_es_symbol_iterator__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! core-js/modules/es.symbol.iterator */ "./node_modules/core-js/modules/es.symbol.iterator.js");
 /* harmony import */ var core_js_modules_es_symbol_iterator__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_symbol_iterator__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var core_js_modules_es_array_from__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! core-js/modules/es.array.from */ "./node_modules/core-js/modules/es.array.from.js");
-/* harmony import */ var core_js_modules_es_array_from__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_array_from__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var core_js_modules_es_array_iterator__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! core-js/modules/es.array.iterator */ "./node_modules/core-js/modules/es.array.iterator.js");
-/* harmony import */ var core_js_modules_es_array_iterator__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_array_iterator__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var core_js_modules_es_object_to_string__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! core-js/modules/es.object.to-string */ "./node_modules/core-js/modules/es.object.to-string.js");
-/* harmony import */ var core_js_modules_es_object_to_string__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_object_to_string__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var core_js_modules_es_regexp_to_string__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! core-js/modules/es.regexp.to-string */ "./node_modules/core-js/modules/es.regexp.to-string.js");
-/* harmony import */ var core_js_modules_es_regexp_to_string__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_regexp_to_string__WEBPACK_IMPORTED_MODULE_6__);
-/* harmony import */ var core_js_modules_es_string_iterator__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! core-js/modules/es.string.iterator */ "./node_modules/core-js/modules/es.string.iterator.js");
-/* harmony import */ var core_js_modules_es_string_iterator__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_string_iterator__WEBPACK_IMPORTED_MODULE_7__);
-/* harmony import */ var core_js_modules_web_dom_collections_for_each__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! core-js/modules/web.dom-collections.for-each */ "./node_modules/core-js/modules/web.dom-collections.for-each.js");
-/* harmony import */ var core_js_modules_web_dom_collections_for_each__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_web_dom_collections_for_each__WEBPACK_IMPORTED_MODULE_8__);
-/* harmony import */ var core_js_modules_web_dom_collections_iterator__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! core-js/modules/web.dom-collections.iterator */ "./node_modules/core-js/modules/web.dom-collections.iterator.js");
-/* harmony import */ var core_js_modules_web_dom_collections_iterator__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_web_dom_collections_iterator__WEBPACK_IMPORTED_MODULE_9__);
+/* harmony import */ var core_js_modules_es_array_filter__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! core-js/modules/es.array.filter */ "./node_modules/core-js/modules/es.array.filter.js");
+/* harmony import */ var core_js_modules_es_array_filter__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_array_filter__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var core_js_modules_es_array_from__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! core-js/modules/es.array.from */ "./node_modules/core-js/modules/es.array.from.js");
+/* harmony import */ var core_js_modules_es_array_from__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_array_from__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var core_js_modules_es_array_iterator__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! core-js/modules/es.array.iterator */ "./node_modules/core-js/modules/es.array.iterator.js");
+/* harmony import */ var core_js_modules_es_array_iterator__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_array_iterator__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var core_js_modules_es_object_to_string__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! core-js/modules/es.object.to-string */ "./node_modules/core-js/modules/es.object.to-string.js");
+/* harmony import */ var core_js_modules_es_object_to_string__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_object_to_string__WEBPACK_IMPORTED_MODULE_6__);
+/* harmony import */ var core_js_modules_es_regexp_to_string__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! core-js/modules/es.regexp.to-string */ "./node_modules/core-js/modules/es.regexp.to-string.js");
+/* harmony import */ var core_js_modules_es_regexp_to_string__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_regexp_to_string__WEBPACK_IMPORTED_MODULE_7__);
+/* harmony import */ var core_js_modules_es_string_iterator__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! core-js/modules/es.string.iterator */ "./node_modules/core-js/modules/es.string.iterator.js");
+/* harmony import */ var core_js_modules_es_string_iterator__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_string_iterator__WEBPACK_IMPORTED_MODULE_8__);
+/* harmony import */ var core_js_modules_web_dom_collections_for_each__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! core-js/modules/web.dom-collections.for-each */ "./node_modules/core-js/modules/web.dom-collections.for-each.js");
+/* harmony import */ var core_js_modules_web_dom_collections_for_each__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_web_dom_collections_for_each__WEBPACK_IMPORTED_MODULE_9__);
+/* harmony import */ var core_js_modules_web_dom_collections_iterator__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! core-js/modules/web.dom-collections.iterator */ "./node_modules/core-js/modules/web.dom-collections.iterator.js");
+/* harmony import */ var core_js_modules_web_dom_collections_iterator__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_web_dom_collections_iterator__WEBPACK_IMPORTED_MODULE_10__);
+
 
 
 
@@ -5311,6 +5326,7 @@ function () {
       this.$btns = this.$page.querySelectorAll(buttons);
       this.$overlay = this.$page.parentElement.querySelector('.overlay');
       this.$close = this.$overlay.querySelector('.close');
+      this.onPlayerStateChange = this.onPlayerStateChange.bind(this);
     } catch (err) {}
   }
 
@@ -5322,23 +5338,58 @@ function () {
         tag.src = "https://www.youtube.com/iframe_api";
         var firstScriptTag = document.getElementsByTagName('script')[0];
         firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-
-        _bindTriggersPlay.call(this);
-
-        _bindCloseBtn.call(this);
+        this.bindTriggersPlay();
+        this.bindCloseBtn();
       } catch (err) {}
+    }
+  }, {
+    key: "bindTriggersPlay",
+    value: function bindTriggersPlay() {
+      var _this = this;
+
+      this.$btns.forEach(function (btn, i) {
+        try {
+          if (i % 2 === 1) {
+            btn.setAttribute('data-disabled', true);
+          }
+        } catch (e) {}
+
+        if (btn.getAttribute('data-disabled')) btn.onclick = null;else btn.onclick = _btnClickHandler.bind(_this);
+      });
+    }
+  }, {
+    key: "bindCloseBtn",
+    value: function bindCloseBtn() {
+      this.$close.onclick = _closeClickHandler.bind(this);
     }
   }, {
     key: "useClose",
     value: function useClose() {}
   }, {
-    key: "btnClickHandler",
-    value: function btnClickHandler(e) {
-      e.preventDefault();
-      this.currentBtn = e.target;
-      var path = e.target.closest('[data-url]').getAttribute('data-url');
+    key: "createPlayer",
+    value: function createPlayer(url) {
+      _overlayStyle.call(this, 'flex', ['animated', 'fadeIn'], ['fadeOut']);
 
-      _createPlayer.call(this, path);
+      if (this.player) return;
+      this.player = new YT.Player('frame', {
+        height: '100%',
+        width: '100%',
+        videoId: "".concat(url),
+        events: {
+          'onStateChange': this.onPlayerStateChange
+        }
+      });
+    }
+  }, {
+    key: "onPlayerStateChange",
+    value: function onPlayerStateChange(state) {
+      try {
+        if (!state.data) {
+          var $playCircle = _showClosedVideoStyle.call(this);
+
+          $playCircle.onclick = _btnClickHandler.bind(this);
+        }
+      } catch (e) {}
     }
   }, {
     key: "destroy",
@@ -5363,35 +5414,26 @@ function _closeClickHandler() {
   this.useClose();
 }
 
-function _bindTriggersPlay() {
-  var _this = this;
-
-  this.$btns.forEach(function (btn) {
-    if (btn.classList.contains('closed')) btn.onclick = null;else btn.onclick = function (e) {
-      _this.btnClickHandler(e);
-    };
-  });
-}
-
-function _bindCloseBtn() {
-  this.$close.onclick = _closeClickHandler.bind(this);
-}
-
-function _createPlayer(url) {
-  _overlayStyle.call(this, 'flex', ['animated', 'fadeIn'], ['fadeOut']);
+function _btnClickHandler(e) {
+  e.preventDefault();
+  this.$activeBtn = e.target;
+  var url = e.target.closest('[data-url]').getAttribute('data-url');
 
   if (this.player) {
-    this.player.loadVideoById({
-      videoId: "".concat(url)
-    });
-    return;
-  }
+    if (this.path !== url) {
+      this.path = url;
+      this.player.loadVideoById({
+        videoId: this.path
+      });
 
-  this.player = new YT.Player('frame', {
-    height: '100%',
-    width: '100%',
-    videoId: "".concat(url)
-  });
+      _overlayStyle.call(this, 'flex', ['animated', 'fadeIn'], ['fadeOut']);
+    } else {
+      _overlayStyle.call(this, 'flex', ['animated', 'fadeIn'], ['fadeOut']);
+    }
+  } else {
+    this.path = url;
+    this.createPlayer(this.path);
+  }
 }
 
 function _overlayStyle(display, addClass, removeClass) {
@@ -5402,6 +5444,25 @@ function _overlayStyle(display, addClass, removeClass) {
   (_this$$overlay$classL = this.$overlay.classList).add.apply(_this$$overlay$classL, _toConsumableArray(addClass));
 
   (_this$$overlay$classL2 = this.$overlay.classList).remove.apply(_this$$overlay$classL2, _toConsumableArray(removeClass));
+}
+
+function _showClosedVideoStyle() {
+  var $openVideo = this.$activeBtn.closest('.module__video-item');
+  var $playSvg = this.$activeBtn.querySelector('svg').cloneNode(true);
+  ;
+  console.log($playSvg, this.$activeBtn);
+  var $closedVideo = $openVideo.nextElementSibling;
+  $closedVideo.style.filter = "grayscale(0%)";
+  $closedVideo.style.opacity = '1';
+  var $playCircle = $closedVideo.querySelector('.play__circle');
+  $playCircle.classList.remove('closed');
+  $playCircle.querySelector('svg').remove();
+  $playCircle.appendChild($playSvg);
+  $playCircle.setAttribute('data-disabled', false);
+  var $playText = $closedVideo.querySelector('.play__text');
+  $playText.classList.remove('attention');
+  $playText.textContent = 'play video';
+  return $playCircle;
 }
 
 /***/ }),
