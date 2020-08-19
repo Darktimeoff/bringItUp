@@ -4,7 +4,6 @@ export default class MiniSlider extends Slider {
     constructor({slides = null, ...options}) {
         super(options);
         this.$slides = [...this.$container.querySelectorAll(slides)];
-        console.log(this)
     }
 
     init() {

@@ -1,6 +1,8 @@
 import MainSlider from './modules/slider/slider-main.component';
 import VideoPlay from './modules/playVideo.component';
-import MiniSlider from './modules/slider/slider-mini.component'
+import MiniSlider from './modules/slider/slider-mini.component';
+import Difference from './modules/difference.component';
+
 window.addEventListener('DOMContentLoaded', () => {
     const mainPageSlider = new MainSlider({container:'.page', btns:'.next', logo:'.sidecontrol .logo'});
     mainPageSlider.render();
@@ -37,4 +39,26 @@ window.addEventListener('DOMContentLoaded', () => {
     const pageVideo = new VideoPlay('.page', '.showup .play');
     pageVideo.init();
 
+    /*const difference = Difference.moreComponent({
+        containers: ['.officernew', '.officerold'],
+        cardContent: '.officer__card-item',
+        buttonClick:'.plus__content',
+        animateClass: 'fadeIn'
+    });*/
+
+    const differenceNew = new Difference({
+        container: '.officernew',
+        cardContent: '.officer__card-item',
+        buttonClick:'.plus__content',
+        animateClass: 'fadeIn'
+    });
+    differenceNew.init();
+
+    const differenceOld = new Difference({
+        container: '.officerold',
+        cardContent: '.officer__card-item',
+        buttonClick:'.plus__content',
+        animateClass: 'fadeIn'
+    });
+    differenceOld.init();
 });
