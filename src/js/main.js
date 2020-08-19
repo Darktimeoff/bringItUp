@@ -2,6 +2,7 @@ import MainSlider from './modules/slider/slider-main.component';
 import VideoPlay from './modules/playVideo.component';
 import MiniSlider from './modules/slider/slider-mini.component';
 import Difference from './modules/difference.component';
+import Form from './modules/form.component';
 
 window.addEventListener('DOMContentLoaded', () => {
     const mainPageSlider = new MainSlider({container:'.page', btns:'.next', logo:'.sidecontrol .logo'});
@@ -61,4 +62,7 @@ window.addEventListener('DOMContentLoaded', () => {
         animateClass: 'fadeIn'
     });
     differenceOld.init();
+
+    new Form('form').init()
+    
 });
